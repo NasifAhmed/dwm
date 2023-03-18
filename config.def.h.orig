@@ -1,8 +1,5 @@
 /* See LICENSE file for copyright and license details. */
 
-/* Constants */
-#define TERMINAL "alacritty"
-
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -34,12 +31,9 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	
-	/* class      	 instance    title       		tags mask     iscentered   isfloating   monitor */
-	{ "Gimp",     	 NULL,       NULL,       		0,            0,           1,           -1 },
-	{ "Firefox",  	 NULL,       NULL,       		1 << 8,       0,           1,           -1 },
-	{ "firefox",  	 NULL,       "Picture-in-Picture", 	0,            1,	   1,           -1 },
-	{ "Pavucontrol", NULL,       NULL,       		0,            1,	   1,           -1 },
+	/* class      instance    title       tags mask     isfloating   monitor */
+	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -56,7 +50,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask
+#define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -69,7 +63,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { TERMINAL, NULL };
+static const char *termcmd[]  = { "st", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -84,7 +78,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_q,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -106,19 +100,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-
-	{ MODKEY,			XK_KP_Add,	   spawn,	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; dunstify -t 600 -h string:x-dunst-stack-tag:vol $(wpctl get-volume @DEFAULT_AUDIO_SINK@)") },
-	{ MODKEY,			XK_KP_Subtract,	   spawn,	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; dunstify -t 600 -h string:x-dunst-stack-tag:vol $(wpctl get-volume @DEFAULT_AUDIO_SINK@)") },
-	{ MODKEY,			XK_KP_Multiply,	   spawn,	   SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") },
-
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
