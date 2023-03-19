@@ -111,6 +111,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
+	{ MODKEY,			XK_Escape,	   spawn,	   SHCMD("slock") },
 	{ MODKEY,			XK_KP_Add,	   spawn,	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+; dunstify -t 600 -h string:x-dunst-stack-tag:vol $(wpctl get-volume @DEFAULT_AUDIO_SINK@)") },
 	{ MODKEY,			XK_KP_Subtract,	   spawn,	   SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%-; dunstify -t 600 -h string:x-dunst-stack-tag:vol $(wpctl get-volume @DEFAULT_AUDIO_SINK@)") },
 	{ MODKEY,			XK_KP_Multiply,	   spawn,	   SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle") },
